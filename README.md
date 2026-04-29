@@ -12,8 +12,3 @@ monolm is a lightweight framework for running GGUF-based LLMs via llama.cpp
 ```
 pip install -e .
 ```
-
-- [runner.py](runner.py): generation of a LLM response to a single user query
-- [chat.py](chat.py)
-- [timing_benchmark.py](timing_benchmark.py)
-- [accuracy_benchmark.py](accuracy_benchmark.py)
