@@ -1,4 +1,4 @@
-"""Runner script to load the LLM model and generate a response to a user query."""
+"""monolm runner generates a response to a user query."""
 
 from monolm import load_model, print_stream
 
