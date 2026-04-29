@@ -8,7 +8,7 @@ if __name__ == '__main__':
         n_ctx=131072,
         n_threads=8,
         n_gpu_layers=43,
-        )
+    )
 
     stream = llm.create_chat_completion(
         messages=[

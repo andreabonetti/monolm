@@ -1,23 +1,26 @@
-from llama_cpp import Llama
 import contextlib
 import os
 
+from llama_cpp import Llama
+
+
 def load_model(
     model_path: str,
-    n_ctx: int = 2048, # Context length
-    n_threads: int = 8, # Number of threads to use for inference
-    n_gpu_layers: int = 1, # Metal offload
-    verbose: bool = False, # Disable verbose logging
-    ):
+    n_ctx: int = 2048,  # Context length
+    n_threads: int = 8,  # Number of threads to use for inference
+    n_gpu_layers: int = 1,  # Metal offload
+    verbose: bool = False,  # Disable verbose logging
+):
     """Load the LLaMA model with error output suppressed."""
     with open(os.devnull, 'w') as f, contextlib.redirect_stderr(f):
         return Llama(
             model_path=model_path,
-            n_ctx=n_ctx,  
-            n_threads=n_threads,  
-            n_gpu_layers=n_gpu_layers,  
-            verbose=verbose,  
+            n_ctx=n_ctx,
+            n_threads=n_threads,
+            n_gpu_layers=n_gpu_layers,
+            verbose=verbose,
         )
+
 
 def print_stream(stream):
     """Print the streamed response from the model."""
