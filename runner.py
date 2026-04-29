@@ -1,25 +1,14 @@
 """Runner script to load the LLM model and generate a response to a user query."""
 
-import contextlib
-import os
-
-from llama_cpp import Llama
-
-
-def load_model():
-    """Load the LLaMA model with error output suppressed."""
-    with open(os.devnull, 'w') as f, contextlib.redirect_stderr(f):
-        return Llama(
-            model_path='models/Phi-3-mini-4k-instruct-q4.gguf',
-            n_ctx=2048,  # Context length
-            n_threads=8,  # Number of threads to use for inference
-            n_gpu_layers=1,  # Metal offload
-            verbose=False,  # Disable verbose logging
-        )
-
+from monolm import load_model, print_stream
 
 if __name__ == '__main__':
-    llm = load_model()
+    llm = load_model(
+        model_path='models/gemma-4-E4B-it-Q4_K_M.gguf',
+        n_ctx=131072,
+        n_threads=8,
+        n_gpu_layers=43,
+        )
 
     stream = llm.create_chat_completion(
         messages=[
@@ -31,6 +20,4 @@ if __name__ == '__main__':
         stream=True,
     )
 
-    for chunk in stream:
-        delta = chunk['choices'][0]['delta'].get('content', '')
-        print(delta, end='', flush=True)
+    print_stream(stream)

@@ -1,3 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = 'setuptools.build_meta'
+
+[tool.setuptools.packages.find]
+include = [
+    "monolm",
+]
+
+[project]
+name = "monolm"
+version = "0.0.1"
+description = "monolm is a lightweight framework for running GGUF-based LLMs via llama.cpp"
+readme = "README.md"
+authors = [
+    { name = "Andrea Bonetti", email = "andrea.bonetti@alumni.epfl.ch" }
+]
+dependencies = []
+
 [tool.ruff]
 line-length = 100
 
