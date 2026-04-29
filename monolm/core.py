@@ -28,3 +28,36 @@ def print_stream(stream):
         delta = chunk['choices'][0]['delta'].get('content', '')
         print(delta, end='', flush=True)
     print()
+
+
+def chat(llm, tools: list =[]):
+    """Start an interactive chat session with the LLM, optionally using tools."""
+
+    messages = []
+
+    while True:
+        user_input = input('you: ').strip()
+
+        if user_input.lower() in ['exit', 'quit']:
+            break
+
+        # tools run on every user input
+        for tool in tools:
+            user_input = tool(user_input)
+
+        messages.append({'role': 'user', 'content': user_input})
+
+        stream = llm.create_chat_completion(messages=messages, stream=True)
+
+        print('assistant: ', end='', flush=True)
+
+        assistant_text = ''
+
+        for chunk in stream:
+            delta = chunk['choices'][0]['delta'].get('content', '')
+            print(delta, end='', flush=True)
+            assistant_text += delta
+
+        print('\n')
+
+        messages.append({'role': 'assistant', 'content': assistant_text})

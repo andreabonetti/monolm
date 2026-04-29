@@ -1,5 +1,5 @@
 
-from monolm import load_model, url_context
+from monolm import load_model, chat, url_context
 
 if __name__ == '__main__':
 
@@ -17,31 +17,13 @@ if __name__ == '__main__':
         n_gpu_layers=config['n_gpu_layers'],
     )
 
-    print(f"Local LLM ready: {config['model']}. Type 'exit' to quit.\n")
+    tools=[url_context]
 
-    messages = []
+    print(f"monolm chat")
+    print(f"→ llm: {config['model']}")
+    print(f"→ tools: {', '.join([tool.__name__ for tool in tools])}")
+    print(f"type 'exit' to quit.\n")
 
-    while True:
-        user_input = input('you: ').strip()
 
-        if user_input.lower() in ['exit', 'quit']:
-            break
 
-        user_input = url_context(user_input)
-
-        messages.append({'role': 'user', 'content': user_input})
-
-        stream = llm.create_chat_completion(messages=messages, stream=True)
-
-        print('assistant: ', end='', flush=True)
-
-        assistant_text = ''
-
-        for chunk in stream:
-            delta = chunk['choices'][0]['delta'].get('content', '')
-            print(delta, end='', flush=True)
-            assistant_text += delta
-
-        print('\n')
-
-        messages.append({'role': 'assistant', 'content': assistant_text})
+    chat(llm, tools=[url_context])
