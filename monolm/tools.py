@@ -1,11 +1,14 @@
 import re
+
 import requests
 from bs4 import BeautifulSoup
+
 
 def _extract_url(text):
     """Extract the first URL from the given text."""
     match = re.search(r'https?://\S+', text)
     return match.group(0) if match else None
+
 
 def _fetch_url_text(url: str) -> str:
     """Fetch the text content of a webpage, removing scripts and styles."""
@@ -22,6 +25,7 @@ def _fetch_url_text(url: str) -> str:
     text = soup.get_text(separator='\n')
     return '\n'.join(line.strip() for line in text.splitlines() if line.strip())
 
+
 def url_context(user_input):
     """If URL is present, fetch its content for context."""
     url = _extract_url(user_input)
@@ -34,5 +38,5 @@ def url_context(user_input):
             f'CONTENT:\n{page_text[:12000]}\n\n'
             f'QUESTION:\n{user_input}'
         )
-    
+
     return user_input

@@ -30,7 +30,7 @@ def print_stream(stream):
     print()
 
 
-def chat(llm, tools: list =[]):
+def chat(llm, tools: list = []):
     """Start an interactive chat session with the LLM, optionally using tools."""
 
     messages = []
