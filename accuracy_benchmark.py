@@ -1,10 +1,7 @@
 import argparse
-import contextlib
 import json
-import os
 import re
 
-from llama_cpp import Llama
 from monolm import load_model
 
 DEFAULT_DATASET = [
