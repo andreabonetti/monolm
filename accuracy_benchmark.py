@@ -5,6 +5,7 @@ import os
 import re
 
 from llama_cpp import Llama
+from monolm import load_model
 
 DEFAULT_DATASET = [
     {'prompt': 'What is the capital of France?', 'expected': 'Paris'},
@@ -24,19 +25,6 @@ DEFAULT_DATASET = [
     },
     {'prompt': 'What is H2O commonly called?', 'expected': 'water'},
 ]
-
-
-def load_model(model_path, n_ctx=2048, n_threads=8, n_gpu_layers=1, seed=0):
-    """Load the model with noisy stderr output suppressed."""
-    with open(os.devnull, 'w') as f, contextlib.redirect_stderr(f):
-        return Llama(
-            model_path=model_path,
-            n_ctx=n_ctx,
-            n_threads=n_threads,
-            n_gpu_layers=n_gpu_layers,
-            seed=seed,
-            verbose=False,
-        )
 
 
 def load_dataset(path=None, limit=None):

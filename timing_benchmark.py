@@ -6,17 +6,7 @@ import time
 
 from llama_cpp import Llama
 
-
-def load_model(model_path, n_ctx=2048, n_threads=8, n_gpu_layers=1):
-    """Load the LLaMA model with error output suppressed."""
-    with open(os.devnull, 'w') as f, contextlib.redirect_stderr(f):
-        return Llama(
-            model_path=model_path,
-            n_ctx=n_ctx,
-            n_threads=n_threads,
-            n_gpu_layers=n_gpu_layers,
-            verbose=False,
-        )
+from monolm import load_model
 
 
 def run_once(llm, prompt, max_tokens=64):

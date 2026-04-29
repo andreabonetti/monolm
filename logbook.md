@@ -36,7 +36,7 @@ Contains-expected accuracy:100.00%
 ## best timing configurations
 
 ```
-python timing_benchmark.py --model models/gemma-4-E4B-it-Q4_K_M.gguf --ctx 131072 --gpu 43 --threads 8
+$ python timing_benchmark.py --model models/gemma-4-E4B-it-Q4_K_M.gguf --ctx 131072 --gpu 43 --threads 8
 TTFT mean: 0.044 s
 TTFT std:  0.002 s
 TPS mean:  23.94 tok/s
@@ -44,7 +44,7 @@ TPS std:   0.19 tok/s
 ```
 
 ```
-python timing_benchmark.py --model models/Phi-3-mini-4k-instruct-q4.gguf --ctx 4096 --gpu 33 --threads 8
+$ python timing_benchmark.py --model models/Phi-3-mini-4k-instruct-q4.gguf --ctx 4096 --gpu 33 --threads 8
 TTFT mean: 0.034 s
 TTFT std:  0.001 s
 TPS mean:  30.33 tok/s
