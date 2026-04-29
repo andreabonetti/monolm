@@ -2,6 +2,10 @@
 
 Latest entries are added on top.
 
+## llama cpp api
+
+https://llama-cpp-python.readthedocs.io/en/latest/api-reference/
+
 ## accuracy
 
 ```
