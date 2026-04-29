@@ -35,7 +35,7 @@ def url_context(user_input):
         user_input = (
             'You are given a webpage content. Use it as context.\n\n'
             f'URL: {url}\n\n'
-            f'CONTENT:\n{page_text[:12000]}\n\n'
+            f'CONTENT:\n{page_text[:12000]}\n\n'  # TODO: smarter truncation
             f'QUESTION:\n{user_input}'
         )
 
