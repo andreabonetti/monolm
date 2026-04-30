@@ -2,6 +2,7 @@ import re
 
 import requests
 import trafilatura
+from pathlib import Path
 
 
 def _extract_url(text):
@@ -39,5 +40,49 @@ def url_context(user_input):
             f'CONTENT:\n{markdown}\n\n'
             f'QUESTION:\n{user_input}'
         )
+
+    return user_input
+
+
+def _read_file(path: str, max_chars: int = 12000) -> str:
+    """Safely read a file from disk."""
+    path = Path(path).expanduser().resolve()
+    
+    if not path.exists() or not path.is_file():
+        raise ValueError("File not found")
+
+    content = path.read_text(encoding="utf-8", errors="ignore")
+    return content[:max_chars]
+
+def _extract_paths(text: str):
+    """
+    Extract paths from commands like:
+    /read path/to/file
+    /read "path with spaces/file.txt"
+    """
+    pattern = r'/read\s+(?:"([^"]+)"|(\S+))'
+    matches = re.findall(pattern, text)
+
+    # each match is a tuple (quoted, unquoted)
+    paths = [m[0] or m[1] for m in matches]
+    return paths
+
+
+def file_context(user_input: str) -> str:
+    """If file path is present, load it as context."""
+    paths = _extract_paths(user_input)
+
+    for path in paths:
+        try:
+            content = _read_file(path)
+
+            user_input = (
+                'You are given a local file. Use it as context.\n\n'
+                f'PATH: {path}\n\n'
+                f'CONTENT:\n{content}\n\n'
+                f'QUESTION:\n{user_input}'
+            )
+        except Exception as e:
+            user_input += f"\n\n[File read error: {e}]"
 
     return user_input
