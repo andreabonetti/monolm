@@ -1,9 +1,8 @@
 import re
 
 import requests
-from bs4 import BeautifulSoup
-
 import trafilatura
+
 
 def _extract_url(text):
     """Extract the first URL from the given text."""
@@ -28,7 +27,7 @@ def url_context(user_input):
 
         markdown = trafilatura.extract(
             html,
-            output_format="markdown",
+            output_format='markdown',
             include_links=True,
             include_images=False,
             include_formatting=True,
