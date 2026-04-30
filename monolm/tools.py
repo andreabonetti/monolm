@@ -1,8 +1,8 @@
 import re
+from pathlib import Path
 
 import requests
 import trafilatura
-from pathlib import Path
 
 
 def _extract_url(text):
@@ -47,12 +47,13 @@ def url_context(user_input):
 def _read_file(path: str, max_chars: int = 12000) -> str:
     """Safely read a file from disk."""
     path = Path(path).expanduser().resolve()
-    
-    if not path.exists() or not path.is_file():
-        raise ValueError("File not found")
 
-    content = path.read_text(encoding="utf-8", errors="ignore")
+    if not path.exists() or not path.is_file():
+        raise ValueError('File not found')
+
+    content = path.read_text(encoding='utf-8', errors='ignore')
     return content[:max_chars]
+
 
 def _extract_paths(text: str):
     """
@@ -83,6 +84,6 @@ def file_context(user_input: str) -> str:
                 f'QUESTION:\n{user_input}'
             )
         except Exception as e:
-            user_input += f"\n\n[File read error: {e}]"
+            user_input += f'\n\n[File read error: {e}]'
 
     return user_input
