@@ -10,20 +10,12 @@ def _extract_url(text):
     return match.group(0) if match else None
 
 
-def _fetch_url_text(url: str) -> str:
-    """Fetch the text content of a webpage, removing scripts and styles."""
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    r = requests.get(url, headers=headers, timeout=10)
-    r.raise_for_status()
-
-    soup = BeautifulSoup(r.text, 'html.parser')
-
-    # remove junk
-    for tag in soup(['script', 'style', 'noscript']):
-        tag.decompose()
-
-    text = soup.get_text(separator='\n')
-    return '\n'.join(line.strip() for line in text.splitlines() if line.strip())
+def _fetch_html(url: str) -> str:
+    """Fetch the HTML content of a webpage."""
+    response = requests.get(url, timeout=3)
+    response.raise_for_status()
+    html = response.text
+    return html
 
 
 def url_context(user_input):
@@ -31,11 +23,20 @@ def url_context(user_input):
     url = _extract_url(user_input)
 
     if url:
-        page_text = _fetch_url_text(url)
+        html = _fetch_html(url)
+
+        markdown = trafilatura.extract(
+            html,
+            output_format="markdown",
+            include_links=True,
+            include_images=False,
+            include_formatting=True,
+        )
+
         user_input = (
             'You are given a webpage content. Use it as context.\n\n'
             f'URL: {url}\n\n'
-            f'CONTENT:\n{page_text[:12000]}\n\n'  # TODO: smarter truncation
+            f'CONTENT:\n{markdown}\n\n'
             f'QUESTION:\n{user_input}'
         )
 
