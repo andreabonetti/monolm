@@ -3,6 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+import trafilatura
 
 def _extract_url(text):
     """Extract the first URL from the given text."""
