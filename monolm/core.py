@@ -47,19 +47,20 @@ def chat(llm, tools: list = []):
         for tool in tools:
             user_input = tool(user_input)
 
+        # append the user's input to the conversation history
         messages.append({'role': 'user', 'content': user_input})
 
+        # create a streaming chat completion
         stream = llm.create_chat_completion(messages=messages, stream=True)
 
+        # print the assistant's response as it streams in
         print('assistant: ', end='', flush=True)
-
         assistant_text = ''
-
         for chunk in stream:
             delta = chunk['choices'][0]['delta'].get('content', '')
             print(delta, end='', flush=True)
             assistant_text += delta
-
         print('\n')
 
+        # append the assistant's full response to the conversation history
         messages.append({'role': 'assistant', 'content': assistant_text})
