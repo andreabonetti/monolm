@@ -32,14 +32,14 @@ def print_stream(stream):
     print()
 
 
-def chat(llm, tools_user: list = [], tools_stream: list = []):
+def chat(llm, prompt=None, tools_user: list = [], tools_stream: list = []):
     """Start an interactive chat session with the LLM, optionally using tools."""
 
     messages = []
     tools_state = {}
 
     while True:
-        user_input = input('you: ').strip()
+        user_input = prompt if prompt is not None else input('you: ').strip()
 
         if user_input.lower() in ['/exit', '/quit']:
             break
@@ -69,3 +69,7 @@ def chat(llm, tools_user: list = [], tools_stream: list = []):
 
         # append the assistant's full response to the conversation history
         messages.append({'role': 'assistant', 'content': assistant_text})
+
+        # exit after single prompt mode
+        if prompt is not None:
+            break
