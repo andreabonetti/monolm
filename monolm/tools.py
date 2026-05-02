@@ -78,7 +78,7 @@ def _extract_paths(text: str):
     return paths
 
 
-def file_context(user_input: str) -> str:
+def read(user_input: str) -> str:
     """If file path is present, load it as context."""
     paths = _extract_paths(user_input)
 
