@@ -113,7 +113,7 @@ def read(user_input: str) -> str:
 # ------------------------------------------------------------
 
 
-def write(user_input: str) -> str:
+def write_user(user_input: str) -> str:
     """Write content to a file."""
     paths = _extract_paths(user_input, cmd='/write')
 

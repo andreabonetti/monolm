@@ -32,7 +32,7 @@ def print_stream(stream):
     print()
 
 
-def chat(llm, tools_user: list = []):
+def chat(llm, tools_user: list = [], tools_stream: list = []):
     """Start an interactive chat session with the LLM, optionally using tools."""
 
     messages = []
@@ -52,6 +52,10 @@ def chat(llm, tools_user: list = []):
 
         # create a streaming chat completion
         stream = llm.create_chat_completion(messages=messages, stream=True)
+
+        # tools run on every stream
+        for tool in tools_stream:
+            stream = tool(stream)
 
         # print the assistant's response as it streams in
         print('assistant: ', end='', flush=True)
