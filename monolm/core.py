@@ -40,7 +40,7 @@ def chat(llm, tools: list = []):
     while True:
         user_input = input('you: ').strip()
 
-        if user_input.lower() in ['exit', 'quit']:
+        if user_input.lower() in ['/exit', '/quit']:
             break
 
         # tools run on every user input
