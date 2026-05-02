@@ -2,8 +2,12 @@
 # write
 # ------------------------------------------------------------
 
-def write_stream(stream: str, file_path: str) -> str:
+def write_stream(stream: str, tools_state: dict) -> str:
     """Write content to a file."""
+    if 'write_path' not in tools_state:
+        return stream, tools_state  # No file specified, skip writing
+    
+    file_path = tools_state['write_path']
     code_block = False
 
     for chunk in stream:

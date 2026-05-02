@@ -36,6 +36,7 @@ def chat(llm, tools_user: list = [], tools_stream: list = []):
     """Start an interactive chat session with the LLM, optionally using tools."""
 
     messages = []
+    tools_state = {}
 
     while True:
         user_input = input('you: ').strip()
@@ -45,7 +46,7 @@ def chat(llm, tools_user: list = [], tools_stream: list = []):
 
         # tools run on every user input
         for tool in tools_user:
-            user_input = tool(user_input)
+            user_input, tools_state = tool(user_input, tools_state)
 
         # append the user's input to the conversation history
         messages.append({'role': 'user', 'content': user_input})
@@ -55,7 +56,7 @@ def chat(llm, tools_user: list = [], tools_stream: list = []):
 
         # tools run on every stream
         for tool in tools_stream:
-            stream = tool(stream)
+            stream, tools_state = tool(stream, tools_state)
 
         # print the assistant's response as it streams in
         print('assistant: ', end='', flush=True)

@@ -69,7 +69,7 @@ def _fetch_html(url: str) -> str:
     return html
 
 
-def url_context(user_input):
+def url_context(user_input, tools_state: dict) -> tuple:
     """If URL is present, fetch its content for context."""
     url = _extract_url(user_input)
 
@@ -91,7 +91,7 @@ def url_context(user_input):
             f'QUESTION:\n{user_input}'
         )
 
-    return user_input
+    return user_input, tools_state
 
 
 # ------------------------------------------------------------
@@ -99,13 +99,13 @@ def url_context(user_input):
 # ------------------------------------------------------------
 
 
-def read(user_input: str) -> str:
+def read(user_input: str, tools_state: dict) -> tuple:
     """Read file from path, load it as context."""
     paths = _extract_paths(user_input, cmd='/read')
 
     user_input = _file_context(paths, user_input)
 
-    return user_input
+    return user_input, tools_state
 
 
 # ------------------------------------------------------------
@@ -113,50 +113,56 @@ def read(user_input: str) -> str:
 # ------------------------------------------------------------
 
 
-def write_user(user_input: str) -> str:
+def write_user(user_input: str, tools_state: dict) -> tuple:
     """Write content to a file."""
+
     paths = _extract_paths(user_input, cmd='/write')
 
     user_input = _file_context(paths, user_input)
 
-    user_input += """
-You are a coding assistant with access to a file editing tool.
+    if paths:
+        user_input += """
+    You are a coding assistant with access to a file editing tool.
 
-When you want to modify a file, you MUST emit an edit block using the exact format below.
+    When you want to modify a file, you MUST emit an edit block using the exact format below.
 
-Rules:
-- Emit the FULL new file content.
-- Do NOT emit partial diffs.
-- Do NOT explain the changes inside the edit block.
-- Do NOT truncate the file.
-- Preserve existing code unless intentionally changing it.
-- Always include the file path.
-- Use UTF-8 text only.
-- You may include normal conversational text before or after the edit block.
+    Rules:
+    - Emit the FULL new file content.
+    - Do NOT emit partial diffs.
+    - Do NOT explain the changes inside the edit block.
+    - Do NOT truncate the file.
+    - Preserve existing code unless intentionally changing it.
+    - Always include the file path.
+    - Use UTF-8 text only.
+    - You may include normal conversational text before or after the edit block.
 
-Exact format:
+    Exact format:
 
-/wite path/to/file.py
-<<<
-FULL FILE CONTENT HERE
->>>
+    /wite path/to/file.py
+    <<<
+    FULL FILE CONTENT HERE
+    >>>
 
-Example:
+    Example:
 
-/write hello.py
-<<<
-def main():
-    print("hello")
+    /write hello.py
+    <<<
+    def main():
+        print("hello")
 
-if __name__ == "__main__":
-    main()
->>>
+    if __name__ == "__main__":
+        main()
+    >>>
 
-Never use markdown code fences around edit blocks.
+    Never use markdown code fences around edit blocks.
 
-If multiple files must be changed, emit multiple edit blocks.
+    If multiple files must be changed, emit multiple edit blocks.
 
-Only emit edit blocks when explicitly asked to create or modify files.
-"""
+    Only emit edit blocks when explicitly asked to create or modify files.
+    """
 
-    return user_input
+        # TODO: writing to only one file for now
+        path  = paths[0]
+        tools_state['write_path'] = path
+
+    return user_input, tools_state
