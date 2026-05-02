@@ -32,7 +32,7 @@ def print_stream(stream):
     print()
 
 
-def chat(llm, tools: list = []):
+def chat(llm, tools_user: list = []):
     """Start an interactive chat session with the LLM, optionally using tools."""
 
     messages = []
@@ -44,7 +44,7 @@ def chat(llm, tools: list = []):
             break
 
         # tools run on every user input
-        for tool in tools:
+        for tool in tools_user:
             user_input = tool(user_input)
 
         # append the user's input to the conversation history

@@ -1,4 +1,7 @@
 from .core import chat, load_model, print_stream
-from .tools import _fetch_html, read, url_context
+from .tools_user import _fetch_html, read, url_context, write
 
-__all__ = ['load_model', 'print_stream', 'chat', 'url_context', 'read', '_fetch_html']
+__all__ = [
+    'chat', 'load_model', 'print_stream', 
+    '_fetch_html', 'read', 'url_context', 'write',
+    ]

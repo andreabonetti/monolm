@@ -1,6 +1,6 @@
 """monolm chat"""
 
-from monolm import chat, read, load_model, url_context
+from monolm import chat, read, load_model, url_context, write
 
 if __name__ == '__main__':
     llm = load_model(
@@ -10,8 +10,8 @@ if __name__ == '__main__':
         n_gpu_layers=43,
     )
 
-    tools = [url_context, read]
+    tools_user = [url_context, read, write]
 
     print("monolm chat - type 'exit' to quit.\n")
 
-    chat(llm, tools=tools)
+    chat(llm, tools_user=tools_user)
