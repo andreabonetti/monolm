@@ -2,6 +2,16 @@
 
 Latest entries are added on top.
 
+## timing: `qwen2.5-coder-14b-instruct-q4_k_m`
+
+```
+$ python timing_benchmark.py --model models/qwen2.5-coder-14b-instruct-q4_k_m.gguf --ctx 16384 --gpu 43 --threads 8
+TTFT mean: 0.119 s
+TTFT std:  0.008 s
+TPS mean:  8.82 tok/s
+TPS std:   0.21 tok/s
+```
+
 ## llama cpp api
 
 https://llama-cpp-python.readthedocs.io/en/latest/api-reference/
