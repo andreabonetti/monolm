@@ -5,6 +5,10 @@ import requests
 import trafilatura
 
 
+# ------------------------------------------------------------
+# url_context
+# ------------------------------------------------------------
+
 def _extract_url(text):
     """Extract the first URL from the given text."""
     match = re.search(r'https?://\S+', text)
@@ -43,6 +47,9 @@ def url_context(user_input):
 
     return user_input
 
+# ------------------------------------------------------------
+# file_context (/read)
+# ------------------------------------------------------------
 
 def _read_file(path: str, max_chars: int = 12000) -> str:
     """Safely read a file from disk."""
