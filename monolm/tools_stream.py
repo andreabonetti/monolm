@@ -31,4 +31,4 @@ def write_stream(stream: str, tools_state: dict) -> str:
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(content)
 
-    return stream
+    return stream, tools_state
