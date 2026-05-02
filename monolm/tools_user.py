@@ -8,6 +8,7 @@ import trafilatura
 # common
 # ------------------------------------------------------------
 
+
 def _extract_paths(text: str, cmd: str = '/read'):
     """
     Extract paths from commands like:
@@ -21,6 +22,7 @@ def _extract_paths(text: str, cmd: str = '/read'):
     paths = [m[0] or m[1] for m in matches]
     return paths
 
+
 def _read_file(path: str, max_chars: int = 12000) -> str:
     """Safely read a file from disk."""
     path = Path(path).expanduser().resolve()
@@ -30,6 +32,7 @@ def _read_file(path: str, max_chars: int = 12000) -> str:
 
     content = path.read_text(encoding='utf-8', errors='ignore')
     return content[:max_chars]
+
 
 def _file_context(paths: list, user_input: str) -> str:
     for path in paths:
@@ -45,6 +48,7 @@ def _file_context(paths: list, user_input: str) -> str:
             user_input += f'\n\n[File read error: {e}]'
 
     return user_input
+
 
 # ------------------------------------------------------------
 # url_context
@@ -94,6 +98,7 @@ def url_context(user_input):
 # read
 # ------------------------------------------------------------
 
+
 def read(user_input: str) -> str:
     """Read file from path, load it as context."""
     paths = _extract_paths(user_input, cmd='/read')
@@ -102,9 +107,11 @@ def read(user_input: str) -> str:
 
     return user_input
 
+
 # ------------------------------------------------------------
 # write
 # ------------------------------------------------------------
+
 
 def write(user_input: str) -> str:
     """Write content to a file."""
