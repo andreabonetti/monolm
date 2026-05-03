@@ -1,7 +1,7 @@
 """git commit
 
 usage:
-    git diff | python git_commit.py
+    git diff --staged | python git_commit.py
 """
 
 import sys
