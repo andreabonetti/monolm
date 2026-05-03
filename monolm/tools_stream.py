@@ -38,6 +38,7 @@ def write_stream(stream: str, tools_state: dict) -> str:
 # git_commit
 # ------------------------------------------------------------
 
+
 def git_commit_stream(stream: str, tools_state: dict) -> str:
     """Stream the git commit message and write it to .git/COMMIT_EDITMSG."""
 
@@ -45,21 +46,20 @@ def git_commit_stream(stream: str, tools_state: dict) -> str:
         return stream, tools_state
 
     # execute stream as bash command
-    import sys
     import subprocess
 
-    print("Shall I execute the command? (Y/n)")
+    print('Shall I execute the command? (Y/n)')
 
     try:
-        with open("/dev/tty") as tty:
+        with open('/dev/tty') as tty:
             confirm = tty.readline().strip()
     except OSError:
-        print("No terminal available, aborting.")
-        confirm = "n"
-    
-    if confirm == "Y":
-        subprocess.run(["bash"], input=tools_state['assistant_text'], text=True)
+        print('No terminal available, aborting.')
+        confirm = 'n'
+
+    if confirm == 'Y':
+        subprocess.run(['bash'], input=tools_state['assistant_text'], text=True)
     else:
-        print("Aborted.")
+        print('Aborted.')
 
     return stream, tools_state
