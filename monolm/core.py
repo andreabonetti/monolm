@@ -1,5 +1,6 @@
 import contextlib
 import os
+from pathlib import Path
 
 from llama_cpp import Llama
 
@@ -14,6 +15,10 @@ def load_model(
 ):
     """Load the LLaMA model with error output suppressed."""
     with open(os.devnull, 'w') as f, contextlib.redirect_stderr(f):
+        BASE_DIR = Path(__file__).resolve().parent
+        model_path = BASE_DIR / model_path
+        model_path = str(model_path.resolve())
+
         return Llama(
             model_path=model_path,
             n_ctx=n_ctx,

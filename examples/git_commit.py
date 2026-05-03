@@ -8,6 +8,7 @@ import sys
 
 from monolm import chat, git_commit_stream, git_commit_user, load_model
 
+
 if __name__ == '__main__':
     git_diff = sys.stdin.read()
 
