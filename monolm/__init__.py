@@ -7,12 +7,12 @@ __all__ = [
     'chat',
     'load_model',
     'print_stream',
+    # tools_stream
+    'write_stream',
     # tools_user
     '_fetch_html',
     'read',
     'url_context',
     'write_user',
     'git_commit',
-    # tools_stream
-    'write_stream',
 ]
