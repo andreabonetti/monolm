@@ -1,4 +1,4 @@
-"""monolm chat"""
+"""code debugger"""
 
 from monolm import chat, load_model, read, url_context, write_user, write_stream
 
