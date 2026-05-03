@@ -179,7 +179,7 @@ def git_commit(user_input: str, tools_state: dict) -> tuple:
     if '/git_commit' not in user_input:
         return user_input, tools_state
 
-    diff = user_input.removeprefix('/git_commit\n\n')
+    diff = user_input.removeprefix('/git_commit')
 
     user_input = (
         'You generate git commit commands from diffs.\n'
