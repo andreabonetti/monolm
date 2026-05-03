@@ -19,6 +19,7 @@ dependencies = []
 
 [tool.ruff]
 line-length = 150
+exclude = ["examples/data/bugged_hello_world.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
