@@ -7,9 +7,9 @@ from llama_cpp import Llama
 
 def load_model(
     model_path: str,
-    n_ctx: int = 2048,  # Context length
-    n_threads: int = 8,  # Number of threads to use for inference
-    n_gpu_layers: int = 1,  # Metal offload
+    n_ctx: int = None,  # Context length
+    n_threads: int = None,  # Number of threads to use for inference
+    n_gpu_layers: int = None,  # Metal offload
     seed: int = None,  # Seed for reproducibility
     verbose: bool = False,  # Disable verbose logging
 ):

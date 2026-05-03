@@ -83,9 +83,9 @@ if __name__ == '__main__':
 
     llm = load_model(
         model_path=args.model,
-        n_ctx=args.ctx,
-        n_threads=args.threads,
-        n_gpu_layers=args.gpu,
+        n_ctx=args.ctx if args.ctx else None,
+        n_threads=args.threads if args.threads else None,
+        n_gpu_layers=args.gpu if args.gpu else None,
     )
 
     stats = benchmark(
