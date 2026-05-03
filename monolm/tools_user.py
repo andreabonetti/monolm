@@ -138,14 +138,12 @@ def write_user(user_input: str, tools_state: dict) -> tuple:
 
     Exact format:
 
-    /wite path/to/file.py
     <<<
     FULL FILE CONTENT HERE
     >>>
 
     Example:
 
-    /write hello.py
     <<<
     def main():
         print("hello")
