@@ -1,4 +1,8 @@
-"""git commit"""
+"""git commit
+
+usage:
+    git diff | python git_commit.py
+"""
 
 import sys
 

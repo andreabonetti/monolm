@@ -59,7 +59,8 @@ def chat(llm, prompt=None, tools_user: list = [], tools_stream: list = []):
             stream, tools_state = tool(stream, tools_state)
 
         # print the assistant's response as it streams in
-        print('assistant: ', end='', flush=True)
+        if prompt is None:
+            print('assistant: ', end='', flush=True)
         assistant_text = ''
         for chunk in stream:
             delta = chunk['choices'][0]['delta'].get('content', '')

@@ -1,6 +1,7 @@
 from .core import chat, load_model, print_stream
+from .tools_user import _fetch_html, read, url_context, write_user, git_commit
 from .tools_stream import write_stream
-from .tools_user import _fetch_html, read, url_context, write_user
+
 
 __all__ = [
     # core
@@ -12,6 +13,7 @@ __all__ = [
     'read',
     'url_context',
     'write_user',
+    'git_commit',
     # tools_stream
     'write_stream',
 ]

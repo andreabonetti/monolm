@@ -166,3 +166,24 @@ def write_user(user_input: str, tools_state: dict) -> tuple:
         tools_state['write_path'] = path
 
     return user_input, tools_state
+
+
+# ------------------------------------------------------------
+# git_commit
+# ------------------------------------------------------------
+
+def git_commit(user_input: str, tools_state: dict) -> tuple:
+    """Generate a git commit message from a diff."""
+
+    if '/git_commit' in user_input:
+        diff = user_input.split('/git_commit')[0].strip()
+
+    user_input = (
+        'You are a helpful assistant that generates git commit messages.\n'
+        'Return ONLY a single shell command in this exact format:\n'
+        'git commit -m "your message"\n'
+        'Do not include explanations, markdown, code fences, or extra text.\n\n'
+        f'Here is the git diff:\n\n{diff}'
+    )
+
+    return user_input, tools_state
