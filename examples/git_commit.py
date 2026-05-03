@@ -20,6 +20,6 @@ if __name__ == '__main__':
 
     tools_user = [git_commit]
 
-    prompt = git_diff + '\n\n/git_commit'
+    prompt = '/git_commit\n\n' + git_diff
 
     chat(llm, prompt=prompt, tools_user=tools_user)
