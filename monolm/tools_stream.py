@@ -12,26 +12,24 @@ def write_stream(stream: str, tools_state: dict) -> str:
     code_block = False
     content = ''
 
-    for chunk in stream:
-        delta = chunk['choices'][0]['delta'].get('content', '')
-
-        if delta.startswith('<<<'):
+    for line in tools_state['assistant_text'].splitlines():
+        if line.startswith('<<<'):
             code_block = True
-        elif delta.endswith('>>>'):
+        elif line.endswith('>>>'):
             code_block = False
 
         if code_block:
             # Extract content between <<< and >>>
-            if delta.startswith('<<<'):
-                content += delta[3:].strip()  # remove <<< from the start
-            elif delta.endswith('>>>'):
-                content += delta[:-3].strip()  # remove >>> from the end
+            if line.startswith('<<<'):
+                content += line[3:].strip()  # remove <<< from the start
+            elif line.endswith('>>>'):
+                content += line[:-3].strip()  # remove >>> from the end
             else:
-                content += delta.strip()
+                content += line.strip()
 
-        # write the content to the file
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(content)
+    # write the content to the file
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.write(content)
 
     return stream, tools_state
 
