@@ -121,43 +121,45 @@ def write_user(user_input: str, tools_state: dict) -> tuple:
     user_input = _file_context(paths, user_input)
 
     if paths:
-        user_input += """
-    You are a coding assistant with access to a file editing tool.
+        prompt_extension = (
+            'You are a coding assistant with access to a file editing tool.\n'
+            '\n'
+            'When you want to modify a file, you MUST emit an edit block using the exact format below.\n'
+            '\n'
+            'Rules:\n'
+            '- Emit the FULL new file content.\n'
+            '- Do NOT emit partial diffs.\n'
+            '- Do NOT explain the changes inside the edit block.\n'
+            '- Do NOT truncate the file.\n'
+            '- Preserve existing code unless intentionally changing it.\n'
+            '- Always include the file path.\n'
+            '- Use UTF-8 text only.\n'
+            '- You may include normal conversational text before or after the edit block.\n'
+            '\n'
+            'Exact format:\n'
+            '\n'
+            '<<<\n'
+            'FULL FILE CONTENT HERE\n'
+            '>>>\n'
+            '\n'
+            'Example:\n'
+            '\n'
+            '<<<\n'
+            'def main():\n'
+            '    print("hello")\n'
+            '\n'
+            'if __name__ == "__main__":\n'
+            '    main()\n'
+            '>>>\n'
+            '\n'
+            'Never use markdown code fences around edit blocks.\n'
+            '\n'
+            'If multiple files must be changed, emit multiple edit blocks.\n'
+            '\n'
+            'Only emit edit blocks when explicitly asked to create or modify files.\n'
+        )
 
-    When you want to modify a file, you MUST emit an edit block using the exact format below.
-
-    Rules:
-    - Emit the FULL new file content.
-    - Do NOT emit partial diffs.
-    - Do NOT explain the changes inside the edit block.
-    - Do NOT truncate the file.
-    - Preserve existing code unless intentionally changing it.
-    - Always include the file path.
-    - Use UTF-8 text only.
-    - You may include normal conversational text before or after the edit block.
-
-    Exact format:
-
-    <<<
-    FULL FILE CONTENT HERE
-    >>>
-
-    Example:
-
-    <<<
-    def main():
-        print("hello")
-
-    if __name__ == "__main__":
-        main()
-    >>>
-
-    Never use markdown code fences around edit blocks.
-
-    If multiple files must be changed, emit multiple edit blocks.
-
-    Only emit edit blocks when explicitly asked to create or modify files.
-    """
+        user_input += '\n\n' + prompt_extension
 
         # TODO: writing to only one file for now
         path = paths[0]
