@@ -1,6 +1,6 @@
 """code debugger"""
 
-from monolm import chat, load_model, read, url_context, write_user, write_stream
+from monolm import chat, load_model, read, url_context, write_stream, write_user
 
 if __name__ == '__main__':
     llm = load_model(
@@ -13,6 +13,6 @@ if __name__ == '__main__':
     tools_user = [url_context, read, write_user]
     tools_stream = [write_stream]
 
-    prompt = "debug /write data/bugged_hello_world.py"
+    prompt = 'debug /write data/bugged_hello_world.py'
 
     chat(llm, prompt=prompt, tools_user=tools_user, tools_stream=tools_stream)

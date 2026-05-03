@@ -1,6 +1,6 @@
 """monolm chat"""
 
-from monolm import chat, load_model, read, url_context, write_user, write_stream
+from monolm import chat, load_model, read, url_context, write_stream, write_user
 
 if __name__ == '__main__':
     llm = load_model(

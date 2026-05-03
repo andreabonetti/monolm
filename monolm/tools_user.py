@@ -162,7 +162,7 @@ def write_user(user_input: str, tools_state: dict) -> tuple:
     """
 
         # TODO: writing to only one file for now
-        path  = paths[0]
+        path = paths[0]
         tools_state['write_path'] = path
 
     return user_input, tools_state
