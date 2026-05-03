@@ -172,6 +172,7 @@ def write_user(user_input: str, tools_state: dict) -> tuple:
 # git_commit
 # ------------------------------------------------------------
 
+
 def git_commit(user_input: str, tools_state: dict) -> tuple:
     """Generate a git commit message from a diff."""
 
