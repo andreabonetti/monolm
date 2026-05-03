@@ -6,7 +6,7 @@ usage:
 
 import sys
 
-from monolm import chat, git_commit, load_model
+from monolm import chat, load_model, git_commit_stream, git_commit_user
 
 if __name__ == '__main__':
     git_diff = sys.stdin.read()
@@ -18,8 +18,10 @@ if __name__ == '__main__':
         n_gpu_layers=43,
     )
 
-    tools_user = [git_commit]
+    tools_user = [git_commit_user]
+
+    tools_stream = [git_commit_stream]
 
     prompt = '/git_commit\n\n' + git_diff
 
-    chat(llm, prompt=prompt, tools_user=tools_user)
+    chat(llm, prompt=prompt, tools_user=tools_user, tools_stream=tools_stream)

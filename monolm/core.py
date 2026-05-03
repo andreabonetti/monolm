@@ -54,10 +54,6 @@ def chat(llm, prompt=None, tools_user: list = [], tools_stream: list = []):
         # create a streaming chat completion
         stream = llm.create_chat_completion(messages=messages, stream=True)
 
-        # tools run on every stream
-        for tool in tools_stream:
-            stream, tools_state = tool(stream, tools_state)
-
         # print the assistant's response as it streams in
         if prompt is None:
             print('assistant: ', end='', flush=True)
@@ -67,6 +63,13 @@ def chat(llm, prompt=None, tools_user: list = [], tools_stream: list = []):
             print(delta, end='', flush=True)
             assistant_text += delta
         print('\n')
+
+        # add assistant_text to tools_state
+        tools_state['assistant_text'] = assistant_text
+
+        # tools run on every stream
+        for tool in tools_stream:
+            stream, tools_state = tool(stream, tools_state)
 
         # append the assistant's full response to the conversation history
         messages.append({'role': 'assistant', 'content': assistant_text})

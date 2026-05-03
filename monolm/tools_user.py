@@ -173,7 +173,7 @@ def write_user(user_input: str, tools_state: dict) -> tuple:
 # ------------------------------------------------------------
 
 
-def git_commit(user_input: str, tools_state: dict) -> tuple:
+def git_commit_user(user_input: str, tools_state: dict) -> tuple:
     """Generate a git commit message from a diff."""
 
     if '/git_commit' not in user_input:
@@ -188,10 +188,18 @@ def git_commit(user_input: str, tools_state: dict) -> tuple:
         '- Analyze ONLY the provided diff.\n'
         '- Do not invent changes that are not present.\n'
         '- Return ONLY one command in this format: git commit -m "message"\n'
-        '- The commit message should be in small letters\n'
+        '\n'
+        'The commit message should:\n'
+        '- be in small letters\n'
+        '- be descriptive\n'
+        '- be one sentence\n'
+        '- reflect all the changes\n'
+        '- mention new features\n'
         '\n'
         'Git diff:\n'
         f'{diff}'
     )
+
+    tools_state['git_commit'] = True
 
     return user_input, tools_state
