@@ -39,11 +39,7 @@ def _file_context(paths: list, user_input: str) -> str:
         try:
             content = _read_file(path)
 
-            user_input += (
-                'You are given a local file. Use it as context.\n\n'
-                f'PATH: {path}\n\n'
-                f'CONTENT:\n{content}\n\n'
-            )
+            user_input += f'You are given a local file. Use it as context.\n\nPATH: {path}\n\nCONTENT:\n{content}\n\n'
         except Exception as e:
             user_input += f'\n\n[File read error: {e}]'
 
@@ -84,12 +80,7 @@ def url_context(user_input, tools_state: dict) -> tuple:
             include_formatting=True,
         )
 
-        user_input = (
-            'You are given a webpage content. Use it as context.\n\n'
-            f'URL: {url}\n\n'
-            f'CONTENT:\n{markdown}\n\n'
-            f'QUESTION:\n{user_input}'
-        )
+        user_input = f'You are given a webpage content. Use it as context.\n\nURL: {url}\n\nCONTENT:\n{markdown}\n\nQUESTION:\n{user_input}'
 
     return user_input, tools_state
 

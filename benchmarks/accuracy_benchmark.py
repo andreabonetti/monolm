@@ -128,10 +128,7 @@ def benchmark(llm, dataset, max_tokens=32, temperature=0.0, instruction=None):
         )
 
         status = 'OK' if has_expected else 'MISS'
-        print(
-            f'example {i}/{len(dataset)} | {status} | '
-            f'exact={is_exact} | expected={example["expected"]!r} | actual={actual!r}'
-        )
+        print(f'example {i}/{len(dataset)} | {status} | exact={is_exact} | expected={example["expected"]!r} | actual={actual!r}')
 
     total = len(dataset)
     return {
@@ -159,9 +156,7 @@ def parse_args():
         default='Answer with only the final answer and no explanation.',
         help='Instruction appended to each prompt',
     )
-    parser.add_argument(
-        '--limit', type=int, default=None, help='Only evaluate the first N examples'
-    )
+    parser.add_argument('--limit', type=int, default=None, help='Only evaluate the first N examples')
 
     return parser.parse_args()
 
