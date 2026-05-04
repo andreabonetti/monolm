@@ -7,10 +7,10 @@ from llama_cpp import Llama
 
 def load_model(
     model_path: str,
-    n_ctx: int = None,  # Context length
-    n_threads: int = None,  # Number of threads to use for inference
-    n_gpu_layers: int = None,  # Metal offload
-    seed: int = None,  # Seed for reproducibility
+    n_ctx: int = 2048,  # Context length
+    n_threads: int = 8,  # Number of threads to use for inference
+    n_gpu_layers: int = 50,  # Metal offload
+    seed: int = 42,  # Seed for reproducibility
     verbose: bool = False,  # Disable verbose logging
 ):
     """Load the LLaMA model with error output suppressed."""

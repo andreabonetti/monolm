@@ -11,12 +11,7 @@ from monolm import chat, git_commit_stream, git_commit_user, load_model
 if __name__ == '__main__':
     git_diff = sys.stdin.read()
 
-    llm = load_model(
-        model_path='../models/gemma-4-E4B-it-Q4_K_M.gguf',
-        n_ctx=131072,
-        n_threads=8,
-        n_gpu_layers=43,
-    )
+    llm = load_model(model_path='../models/gemma-4-E4B-it-Q4_K_M.gguf')
 
     tools_user = [git_commit_user]
 
