@@ -1,6 +1,6 @@
 """monolm runner generates a response to a user query."""
 
-from monolm import load_model, print_stream, load_config
+from monolm import load_config, load_model, print_stream
 
 if __name__ == '__main__':
     config = load_config()

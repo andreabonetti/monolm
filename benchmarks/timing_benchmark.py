@@ -2,7 +2,7 @@ import argparse
 import statistics
 import time
 
-from monolm import load_model, load_config
+from monolm import load_config, load_model
 
 
 def run_once(llm, prompt, max_tokens=64):

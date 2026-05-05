@@ -1,6 +1,6 @@
 """code debugger"""
 
-from monolm import chat, load_model, read, url_context, write_stream, write_user, load_config
+from monolm import chat, load_config, load_model, read, url_context, write_stream, write_user
 
 if __name__ == '__main__':
     config = load_config()

@@ -2,16 +2,16 @@ import contextlib
 import os
 from pathlib import Path
 
+import yaml
 from llama_cpp import Llama
 
-from pathlib import Path
-import yaml
 
-def load_config(yaml_path: str = "~/.monolm/config.yaml") -> dict:
+def load_config(yaml_path: str = '~/.monolm/config.yaml') -> dict:
     path = Path(yaml_path).expanduser()
 
-    with path.open("r", encoding="utf-8") as f:
+    with path.open('r', encoding='utf-8') as f:
         return yaml.safe_load(f)
+
 
 def load_model(
     config: dict,

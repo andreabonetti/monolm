@@ -2,7 +2,7 @@ import argparse
 import json
 import re
 
-from monolm import load_model, load_config
+from monolm import load_config, load_model
 
 DEFAULT_DATASET = [
     {'prompt': 'What is the capital of France?', 'expected': 'Paris'},
