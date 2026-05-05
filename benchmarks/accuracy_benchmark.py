@@ -2,7 +2,7 @@ import argparse
 import json
 import re
 
-from monolm import load_model
+from monolm import load_model, load_config
 
 DEFAULT_DATASET = [
     {'prompt': 'What is the capital of France?', 'expected': 'Paris'},
@@ -142,11 +142,11 @@ def benchmark(llm, dataset, max_tokens=32, temperature=0.0, instruction=None):
 def parse_args():
     parser = argparse.ArgumentParser(description='Local LLM accuracy benchmark')
 
-    parser.add_argument('--model', type=str, required=True, help='Path to GGUF model')
-    parser.add_argument('--dataset', type=str, default=None, help='Optional JSON or JSONL dataset')
-    parser.add_argument('--ctx', type=int, default=2048, help='Context size')
-    parser.add_argument('--threads', type=int, default=8, help='CPU threads')
-    parser.add_argument('--gpu', type=int, default=1, help='GPU layers')
+    parser.add_argument('--model', type=str, help='Path to GGUF model')
+    parser.add_argument('--dataset', type=str, help='Optional JSON or JSONL dataset')
+    parser.add_argument('--ctx', type=int, help='Context size')
+    parser.add_argument('--threads', type=int, help='CPU threads')
+    parser.add_argument('--gpu', type=int, help='GPU layers')
     parser.add_argument('--seed', type=int, default=0, help='Random seed for reproducible runs')
     parser.add_argument('--tokens', type=int, default=32, help='Max tokens per answer')
     parser.add_argument('--temperature', type=float, default=0.0, help='Sampling temperature')
@@ -166,13 +166,16 @@ if __name__ == '__main__':
 
     dataset = load_dataset(path=args.dataset, limit=args.limit)
 
-    llm = load_model(
-        model_path=args.model,
-        n_ctx=args.ctx,
-        n_threads=args.threads,
-        n_gpu_layers=args.gpu,
-        seed=args.seed,
-    )
+    default_config = load_config()
+
+    config = {
+        'model_path': args.model if args.model else default_config.get('model_path'),
+        'n_ctx': args.ctx if args.ctx else default_config.get('n_ctx'),
+        'n_threads': args.threads if args.threads else default_config.get('n_threads'),
+        'n_gpu_layers': args.gpu if args.gpu else default_config.get('n_gpu_layers'),
+    }
+
+    llm = load_model(config)
 
     stats = benchmark(
         llm,

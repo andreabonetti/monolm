@@ -2,7 +2,7 @@ import argparse
 import statistics
 import time
 
-from monolm import load_model
+from monolm import load_model, load_config
 
 
 def run_once(llm, prompt, max_tokens=64):
@@ -66,10 +66,11 @@ def benchmark(llm, prompt, runs=10, warmup=2, max_tokens=64):
 def parse_args():
     parser = argparse.ArgumentParser(description='Local LLM benchmark')
 
-    parser.add_argument('--model', type=str, required=True, help='Path to GGUF model')
-    parser.add_argument('--ctx', type=int, default=2048, help='Context size')
-    parser.add_argument('--threads', type=int, default=8, help='CPU threads')
-    parser.add_argument('--gpu', type=int, default=1, help='GPU layers')
+    parser.add_argument('--model', type=str, help='Path to GGUF model')
+    parser.add_argument('--dataset', type=str, help='Optional JSON or JSONL dataset')
+    parser.add_argument('--ctx', type=int, help='Context size')
+    parser.add_argument('--threads', type=int, help='CPU threads')
+    parser.add_argument('--gpu', type=int, help='GPU layers')
     parser.add_argument('--runs', type=int, default=10, help='Benchmark runs')
     parser.add_argument('--warmup', type=int, default=2, help='Warmup runs')
     parser.add_argument('--tokens', type=int, default=64, help='Max tokens')
@@ -81,12 +82,16 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
 
-    llm = load_model(
-        model_path=args.model,
-        n_ctx=args.ctx if args.ctx else None,
-        n_threads=args.threads if args.threads else None,
-        n_gpu_layers=args.gpu if args.gpu else None,
-    )
+    default_config = load_config()
+
+    config = {
+        'model_path': args.model if args.model else default_config.get('model_path'),
+        'n_ctx': args.ctx if args.ctx else default_config.get('n_ctx'),
+        'n_threads': args.threads if args.threads else default_config.get('n_threads'),
+        'n_gpu_layers': args.gpu if args.gpu else default_config.get('n_gpu_layers'),
+    }
+
+    llm = load_model(config)
 
     stats = benchmark(
         llm,

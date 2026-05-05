@@ -6,12 +6,14 @@ usage:
 
 import sys
 
-from monolm import chat, git_commit_stream, git_commit_user, load_model
+from monolm import chat, git_commit_stream, git_commit_user, load_model, load_config
 
 if __name__ == '__main__':
     git_diff = sys.stdin.read()
 
-    llm = load_model(model_path='../models/gemma-4-E4B-it-Q4_K_M.gguf')
+    config = load_config()
+
+    llm = load_model(config)
 
     tools_user = [git_commit_user]
 

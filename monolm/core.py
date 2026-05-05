@@ -4,28 +4,29 @@ from pathlib import Path
 
 from llama_cpp import Llama
 
+from pathlib import Path
+import yaml
+
+def load_config(yaml_path: str = "~/.monolm/config.yaml") -> dict:
+    path = Path(yaml_path).expanduser()
+
+    with path.open("r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
 
 def load_model(
-    model_path: str,
-    n_ctx: int = 2048,  # Context length
-    n_threads: int = 8,  # Number of threads to use for inference
-    n_gpu_layers: int = 50,  # Metal offload
+    config: dict,
     seed: int = 42,  # Seed for reproducibility
     verbose: bool = False,  # Disable verbose logging
 ):
     """Load the LLaMA model with error output suppressed."""
     with open(os.devnull, 'w') as f, contextlib.redirect_stderr(f):
-        BASE_DIR = Path(__file__).resolve().parent
-        model_path = BASE_DIR / model_path
-        model_path = str(model_path.resolve())
-
         return Llama(
-            model_path=model_path,
-            n_ctx=n_ctx,
-            n_threads=n_threads,
-            n_gpu_layers=n_gpu_layers,
-            seed=seed,
-            verbose=verbose,
+            model_path=config['model_path'],
+            n_ctx=config.get('n_ctx', 2048),
+            n_threads=config.get('n_threads', 8),
+            n_gpu_layers=config.get('n_gpu_layers', 50),
+            seed=config.get('seed', 42),
+            verbose=config.get('verbose', False),
         )
 
 
