@@ -2,6 +2,19 @@
 
 Latest entries are added on top.
 
+## 2026.05.05 - llama-embedding
+
+```
+llama-embedding -m gemma-4-E4B-it-Q4_K_M.gguf
+```
+
+prints:
+```
+print_info: n_ctx_train           = 131072
+[...]
+print_info: n_layer               = 42
+```
+
 ## timing: `qwen2.5-coder-14b-instruct-q4_k_m`
 
 ```
